@@ -1,0 +1,30 @@
+week: 5
+titel: "NTP, Backup & Cron"
+fase: B
+leerdoelen: [LD1, LD7]
+
+wist_je_dat:
+  tekst: "NTP (Network Time Protocol) is een van de oudste internetprotocollen die nog actief gebruikt worden — het werd ontworpen in 1985. Een tijdsverschil van slechts een paar seconden kan SSL-certificaten ongeldig maken."
+  link: "https://www.ntp.org/ntpfaq/NTP-s-def.htm"
+  bron: "NTP.org"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 5."
+
+wat_weet_je_al:
+  - "Hoe zou jij een dagelijkse backup opzetten als je dat manueel zou moeten doen?"
+  - "Wat weet je al over hoe servers hun klok gesynchroniseerd houden?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 5."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-05"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 5."

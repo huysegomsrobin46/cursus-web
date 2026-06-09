@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASM Foundations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+
+    <style>
+        :root {
+            --blue:        #003DA5;
+            --blue-dark:   #002D7A;
+            --blue-mid:    #1A52B8;
+            --blue-tint:   #EBF0FA;
+            --orange:      #E8530A;
+            --text:        #0F172A;
+            --muted:       #64748B;
+            --light:       #94A3B8;
+            --bg:          #F3F6FB;
+            --white:       #FFFFFF;
+            --border:      #DDE3EE;
+            --r:           12px;
+            --r-sm:        8px;
+            --shadow:      0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,61,165,0.07);
+            --shadow-lg:   0 8px 32px rgba(0,61,165,0.13);
+
+            /* per-sectie kleuraccenten */
+            --c-wist:      #6D28D9;
+            --c-doel:      #003DA5;
+            --c-wat:       #047857;
+            --c-leer:      #B45309;
+            --c-tips:      #0E7490;
+            --c-ennu:      #E8530A;
+            --c-test:      #B91C1C;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        /* ── HEADER ─────────────────────────────────────────── */
+
+        .site-header {
+            background: var(--blue);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+        }
+        .header-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .brand-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+        .brand-sep {
+            width: 1px;
+            height: 18px;
+            background: rgba(255,255,255,0.28);
+        }
+        .brand-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.82);
+            letter-spacing: 0.01em;
+        }
+        #breadcrumb {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.55);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #breadcrumb a {
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        #breadcrumb a:hover { color: rgba(255,255,255,0.9); }
+        #breadcrumb .sep { opacity: 0.4; }
+        #breadcrumb .current { color: rgba(255,255,255,0.92); font-weight: 500; }
+
+        /* ── WEEKBALK ────────────────────────────────────────── */
+
+        #week-bar {
+            background: var(--blue-dark);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: none;
+        }
+        .week-bar-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .week-pill {
+            background: rgba(255,255,255,0.14);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        #week-title-bar {
+            font-size: 13px;
+            color: rgba(255,255,255,0.68);
+        }
+        #fase-badge {
+            margin-left: auto;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ── MAIN ────────────────────────────────────────────── */
+
+        .page-main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 24px 88px;
+        }
+
+        /* ── SECTIE HEADER ───────────────────────────────────── */
+
+        #section-header {
+            display: none;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 28px;
+            animation: riseIn 0.38s cubic-bezier(.22,1,.36,1) both;
+        }
+        .icon-wrap {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .section-meta { flex: 1; padding-top: 3px; }
+        #section-week-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        #section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 31px;
+            line-height: 1.18;
+            font-weight: 400;
+            color: var(--text);
+        }
+
+        /* ── CONTENT AREA ────────────────────────────────────── */
+
+        #section-content {
+            display: none;
+            animation: riseIn 0.42s 0.04s cubic-bezier(.22,1,.36,1) both;
+        }
+
+        /* ── KAART BASIS ─────────────────────────────────────── */
+
+        .card {
+            background: var(--white);
+            border-radius: var(--r);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .card-body { padding: 30px 32px; }
+        .card-accent { border-left: 4px solid var(--blue); }
+
+        /* ── WIST JE DAT ─────────────────────────────────────── */
+
+        .wist-card { border-left: 4px solid var(--c-wist); }
+        .quote-mark {
+            font-family: 'DM Serif Display', serif;
+            font-size: 90px;
+            line-height: 0.55;
+            color: var(--c-wist);
+            opacity: 0.18;
+            display: block;
+            margin-bottom: 6px;
+            user-select: none;
+        }
+        .wist-text {
+            font-size: 18.5px;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.7;
+            color: var(--text);
+        }
+        .wist-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 22px;
+            color: var(--c-wist);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.18s;
+        }
+        .wist-link:hover { opacity: 0.65; }
+        .wist-link::before { content: '→'; }
+
+        /* ── DOELSTELLINGEN ──────────────────────────────────── */
+
+        .doel-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .doel-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--blue-tint);
+            border-radius: var(--r-sm);
+            padding: 15px 18px;
+        }
+        .doel-num {
+            width: 27px; height: 27px;
+            background: var(--blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .doel-text { font-size: 14.5px; line-height: 1.55; padding-top: 3px; }
+        .ld-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+        .ld-tag {
+            background: var(--blue);
+            color: #fff;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 4px;
+        }
+
+        /* ── WAT WEET JE AL ──────────────────────────────────── */
+
+        .vragen-list { display: flex; flex-direction: column; gap: 10px; }
+        .vraag-item {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+            padding: 16px 18px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            transition: border-color 0.18s, box-shadow 0.18s;
+            cursor: default;
+        }
+        .vraag-item:hover {
+            border-color: var(--c-wat);
+            box-shadow: 0 0 0 3px rgba(4,120,87,0.07);
+        }
+        .vraag-icon { font-size: 19px; flex-shrink: 0; margin-top: 1px; }
+        .vraag-text { font-size: 14.5px; line-height: 1.55; }
+        .vragen-note {
+            margin-top: 18px;
+            font-size: 12.5px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ── LEERINHOUD ──────────────────────────────────────── */
+
+        .leer-placeholder {
+            text-align: center;
+            padding: 52px 32px;
+        }
+        .leer-icon { font-size: 50px; display: block; margin-bottom: 14px; opacity: 0.55; }
+        .leer-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .leer-desc { font-size: 14.5px; color: var(--muted); max-width: 380px; margin: 0 auto; }
+
+        .leer-items { display: flex; flex-direction: column; gap: 10px; }
+        .leer-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.18s, background 0.18s;
+        }
+        .leer-item:hover { border-color: var(--c-leer); background: #FFFBF5; }
+        .leer-item-icon { font-size: 22px; }
+        .leer-item-label { font-size: 14.5px; font-weight: 500; }
+        .leer-item-arrow { margin-left: auto; color: var(--light); font-size: 18px; }
+
+        /* ── TIPS EN TRICKS ──────────────────────────────────── */
+
+        .tips-list { display: flex; flex-direction: column; gap: 9px; }
+        .tip-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px 16px;
+            background: #F0FAFA;
+            border-left: 3px solid var(--c-tips);
+            border-radius: 0 var(--r-sm) var(--r-sm) 0;
+        }
+        .tip-bullet { color: var(--c-tips); font-weight: 800; font-size: 17px; flex-shrink: 0; line-height: 1.4; }
+        .tip-text { font-size: 14.5px; line-height: 1.52; }
+
+        /* ── EN NU IS HET AAN JOU ────────────────────────────── */
+
+        .ennu-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 52px 32px;
+        }
+        .ennu-emoji { font-size: 52px; margin-bottom: 14px; }
+        .ennu-tekst { font-size: 17px; color: var(--muted); margin-bottom: 28px; max-width: 400px; line-height: 1.6; }
+        .ennu-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--orange);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15.5px;
+            padding: 13px 28px;
+            border-radius: 40px;
+            box-shadow: 0 4px 14px rgba(232,83,10,0.32);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .ennu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(232,83,10,0.38);
+        }
+
+        /* ── TEST JEZELF ─────────────────────────────────────── */
+
+        .test-list { display: flex; flex-direction: column; gap: 14px; }
+        .test-item {
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            overflow: hidden;
+        }
+        .test-vraag {
+            padding: 18px 20px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .test-num {
+            width: 30px; height: 30px;
+            background: var(--c-test);
+            color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .test-text { font-size: 14.5px; line-height: 1.55; font-weight: 500; padding-top: 4px; }
+        .test-hint {
+            padding: 11px 20px;
+            background: #FFF5F5;
+            border-top: 1px dashed #FECACA;
+            font-size: 12.5px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ── OVERVIEW MODE ───────────────────────────────────── */
+
+        .overview-grid { display: flex; flex-direction: column; gap: 10px; }
+        .overview-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            background: var(--white);
+            border-radius: var(--r);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text);
+            border-left: 4px solid transparent;
+            transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+        }
+        .overview-item:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateX(3px);
+        }
+        .overview-icon { font-size: 26px; }
+        .overview-label { font-size: 15px; font-weight: 500; }
+        .overview-arrow { margin-left: auto; color: var(--light); font-size: 18px; }
+
+        /* ── SECTIE-NAVIGATIE ────────────────────────────────── */
+
+        #section-nav {
+            display: none;
+            margin-top: 44px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            animation: riseIn 0.46s 0.08s cubic-bezier(.22,1,.36,1) both;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 9px 16px;
+            border-radius: var(--r-sm);
+            border: 1.5px solid var(--blue-tint);
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .nav-link:hover { background: var(--blue-tint); border-color: var(--blue); }
+        .nav-link.hidden { visibility: hidden; pointer-events: none; }
+
+        .section-dots { display: flex; gap: 7px; align-items: center; }
+        .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.2s, transform 0.2s;
+            display: block;
+        }
+        .dot.active { transform: scale(1.45); }
+
+        /* ── LOADING / ERROR ─────────────────────────────────── */
+
+        #loading {
+            text-align: center;
+            padding: 88px 24px;
+            color: var(--muted);
+        }
+        .spinner {
+            width: 38px; height: 38px;
+            border: 3px solid var(--blue-tint);
+            border-top-color: var(--blue);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 16px;
+        }
+        .error-state { text-align: center; padding: 80px 24px; }
+        .error-icon { font-size: 48px; margin-bottom: 14px; }
+        .error-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 8px; }
+        .error-desc { color: var(--muted); font-size: 14.5px; }
+
+        /* ── FOOTER ──────────────────────────────────────────── */
+
+        .site-footer {
+            background: var(--blue-dark);
+            color: rgba(255,255,255,0.42);
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 11.5px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── ANIMATIES ───────────────────────────────────────── */
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="?week=01">
+            <span class="brand-logo">UCLL</span>
+            <span class="brand-sep"></span>
+            <span class="brand-name">SASM Foundations</span>
+        </a>
+        <nav id="breadcrumb"></nav>
+    </div>
+</header>
+
+<!-- ── WEEKBALK ────────────────────────────────────────────────── -->
+<div id="week-bar">
+    <div class="week-bar-inner">
+        <span class="week-pill" id="week-pill">Week 01</span>
+        <span id="week-title-bar"></span>
+        <span id="fase-badge"></span>
+    </div>
+</div>
+
+<!-- ── MAIN ────────────────────────────────────────────────────── -->
+<main class="page-main">
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Inhoud laden…</p>
+    </div>
+
+    <div id="section-header">
+        <div class="icon-wrap" id="icon-wrap">
+            <span id="section-icon"></span>
+        </div>
+        <div class="section-meta">
+            <div id="section-week-label"></div>
+            <h1 id="section-title"></h1>
+        </div>
+    </div>
+
+    <div id="section-content"></div>
+
+    <nav id="section-nav">
+        <a class="nav-link hidden" id="nav-prev">← Vorige</a>
+        <div class="section-dots" id="dots"></div>
+        <a class="nav-link hidden" id="nav-next">Volgende →</a>
+    </nav>
+
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer class="site-footer">
+    UCLL — Server &amp; System Management Foundations &nbsp;·&nbsp; Academiejaar 2026–2027
+</footer>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────
+const SECTIONS = [
+    { key: 'wist-je-dat',    label: 'Wist je dat…',              icon: '💡', color: '#6D28D9' },
+    { key: 'doelstellingen', label: 'Doelstellingen',             icon: '🎯', color: '#003DA5' },
+    { key: 'wat-weet-je-al', label: 'Wat weet je hier al over?', icon: '🤔', color: '#047857' },
+    { key: 'leerinhoud',     label: 'Leerinhoud',                 icon: '📚', color: '#B45309' },
+    { key: 'tips-en-tricks', label: 'Tips en tricks',             icon: '😎', color: '#0E7490' },
+    { key: 'en-nu',          label: 'En nu is het aan jou!',      icon: '🚀', color: '#E8530A' },
+    { key: 'test-jezelf',    label: 'Test jezelf',                icon: '📝', color: '#B91C1C' },
+];
+
+// ── URL PARAMS ─────────────────────────────────────────────────
+const params  = new URLSearchParams(location.search);
+const weekNum = (params.get('week') || '01').padStart(2, '0');
+const secKey  = params.get('section') || null;
+
+// ── DOM HELPERS ────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const show = id => { $(id).style.display = ''; };
+const hide = id => { $(id).style.display = 'none'; };
+const showFlex = id => { $(id).style.display = 'flex'; };
+
+// ── RENDERERS ──────────────────────────────────────────────────
+
+function renderWistJeDat(d) {
+    const w = d.wist_je_dat || {};
+    return `<div class="card wist-card"><div class="card-body">
+        <span class="quote-mark">"</span>
+        <p class="wist-text">${esc(w.tekst || '')}</p>
+        ${w.link ? `<a class="wist-link" href="${esc(w.link)}" target="_blank" rel="noopener">${esc(w.bron || 'Meer lezen')}</a>` : ''}
+    </div></div>`;
+}
+
+function renderDoelstellingen(d) {
+    const items = (d.doelstellingen || []).map((t, i) => `
+        <li class="doel-item">
+            <span class="doel-num">${i + 1}</span>
+            <span class="doel-text">${esc(t)}</span>
+        </li>`).join('');
+    const tags = (d.leerdoelen || []).map(l => `<span class="ld-tag">${esc(l)}</span>`).join('');
+    return `<div class="card" style="border-left:4px solid var(--c-doel)"><div class="card-body">
+        <ul class="doel-list">${items}</ul>
+        ${tags ? `<div class="ld-tags">${tags}</div>` : ''}
+    </div></div>`;
+}
+
+function renderWatWeetJeAl(d) {
+    const items = (d.wat_weet_je_al || []).map(v => `
+        <div class="vraag-item">
+            <span class="vraag-icon">🤔</span>
+            <p class="vraag-text">${esc(v)}</p>
+        </div>`).join('');
+    return `<div class="card" style="border-left:4px solid var(--c-wat)"><div class="card-body">
+        <div class="vragen-list">${items}</div>
+        <p class="vragen-note">Dit zijn geen inlevervragen — neem even de tijd om hierover na te denken.</p>
+    </div></div>`;
+}
+
+function renderLeerinhoud(d) {
+    const l = d.leerinhoud || {};
+    const items = l.items || [];
+    if (!items.length) {
+        return `<div class="card" style="border-left:4px solid var(--c-leer)">
+            <div class="leer-placeholder">
+                <span class="leer-icon">📂</span>
+                <h2 class="leer-title">Leerinhoud volgt</h2>
+                <p class="leer-desc">${esc(l.beschrijving || 'Slides en opnames worden hier toegevoegd na de les.')}</p>
+            </div></div>`;
+    }
+    const typeIcon = { slides: '📊', video: '🎬', pdf: '📄' };
+    const rendered = items.map(item => `
+        <a class="leer-item" href="${esc(item.url || '#')}" target="_blank" rel="noopener">
+            <span class="leer-item-icon">${typeIcon[item.type] || '📄'}</span>
+            <span class="leer-item-label">${esc(item.label || item.type)}</span>
+            <span class="leer-item-arrow">›</span>
+        </a>`).join('');
+    return `<div class="card" style="border-left:4px solid var(--c-leer)"><div class="card-body">
+        <div class="leer-items">${rendered}</div>
+    </div></div>`;
+}
+
+function renderTips(d) {
+    const items = (d.tips_en_tricks || []).map(t => `
+        <div class="tip-item">
+            <span class="tip-bullet">›</span>
+            <p class="tip-text">${esc(t)}</p>
+        </div>`).join('');
+    return `<div class="card" style="border-left:4px solid var(--c-tips)"><div class="card-body">
+        <div class="tips-list">${items}</div>
+    </div></div>`;
+}
+
+function renderEnNu(d) {
+    const e = d.en_nu || {};
+    return `<div class="card" style="border-left:4px solid var(--c-ennu)">
+        <div class="ennu-inner">
+            <span class="ennu-emoji">🚀</span>
+            <p class="ennu-tekst">${esc(e.tekst || 'De hands-on opdracht staat klaar op GitHub.')}</p>
+            ${e.link ? `<a class="ennu-btn" href="${esc(e.link)}" target="_blank" rel="noopener">
+                📋 &nbsp; Ga naar de opdracht
+            </a>` : ''}
+        </div></div>`;
+}
+
+function renderTestJezelf(d) {
+    const items = (d.test_jezelf || []).map((v, i) => `
+        <div class="test-item">
+            <div class="test-vraag">
+                <span class="test-num">${i + 1}</span>
+                <p class="test-text">${esc(v)}</p>
+            </div>
+            <div class="test-hint">Beantwoord in eigen woorden — geen opzoeken.</div>
+        </div>`).join('');
+    return `<div class="card" style="border-left:4px solid var(--c-test)"><div class="card-body">
+        <div class="test-list">${items}</div>
+    </div></div>`;
+}
+
+function renderSection(data, key) {
+    switch (key) {
+        case 'wist-je-dat':    return renderWistJeDat(data);
+        case 'doelstellingen': return renderDoelstellingen(data);
+        case 'wat-weet-je-al': return renderWatWeetJeAl(data);
+        case 'leerinhoud':     return renderLeerinhoud(data);
+        case 'tips-en-tricks': return renderTips(data);
+        case 'en-nu':          return renderEnNu(data);
+        case 'test-jezelf':    return renderTestJezelf(data);
+        default: return '<p>Onbekende sectie.</p>';
+    }
+}
+
+function renderOverview(data) {
+    return `<div class="overview-grid">${SECTIONS.map(s => `
+        <a class="overview-item" href="?week=${weekNum}&section=${s.key}" style="border-color:${s.color}">
+            <span class="overview-icon">${s.icon}</span>
+            <span class="overview-label">${s.label}</span>
+            <span class="overview-arrow">›</span>
+        </a>`).join('')}</div>`;
+}
+
+// ── XSS ESCAPING ───────────────────────────────────────────────
+function esc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+// ── MOUNT ──────────────────────────────────────────────────────
+async function mount() {
+    let data;
+    try {
+        const resp = await fetch(`weeks/week-${weekNum}.yml`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        data = jsyaml.load(await resp.text());
+    } catch {
+        hide('loading');
+        $('section-content').innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">⚠️</div>
+                <h2 class="error-title">Inhoud niet beschikbaar</h2>
+                <p class="error-desc">Week ${weekNum} is nog niet toegevoegd. Kom later terug.</p>
+            </div>`;
+        show('section-content');
+        return;
+    }
+
+    // weekbalk
+    $('week-pill').textContent = `Week ${weekNum}`;
+    $('week-title-bar').textContent = data.titel || '';
+    $('fase-badge').textContent = data.fase ? `Fase ${data.fase}` : '';
+    show('week-bar');
+
+    if (!secKey) {
+        // OVERVIEW
+        $('breadcrumb').innerHTML = `<span class="current">Week ${weekNum}</span>`;
+        $('icon-wrap').style.background = '#EBF0FA';
+        $('section-icon').textContent = '📋';
+        $('section-week-label').style.color = 'var(--blue)';
+        $('section-week-label').textContent = 'Weekoverzicht';
+        $('section-title').textContent = data.titel || `Week ${weekNum}`;
+        $('section-content').innerHTML = renderOverview(data);
+    } else {
+        const sec = SECTIONS.find(s => s.key === secKey);
+        if (!sec) {
+            $('section-content').innerHTML = `<div class="error-state">
+                <div class="error-icon">❓</div>
+                <h2 class="error-title">Onbekende sectie</h2>
+            </div>`;
+            hide('loading'); show('section-content');
+            return;
+        }
+
+        // breadcrumb
+        $('breadcrumb').innerHTML = `
+            <a href="?week=${weekNum}">Week ${weekNum}</a>
+            <span class="sep">›</span>
+            <span class="current">${sec.label}</span>`;
+
+        // sectie header
+        $('icon-wrap').style.background = sec.color + '18';
+        $('section-icon').textContent = sec.icon;
+        $('section-week-label').style.color = sec.color;
+        $('section-week-label').textContent = `Week ${weekNum} — ${data.titel || ''}`;
+        $('section-title').textContent = sec.label;
+
+        // content
+        $('section-content').innerHTML = renderSection(data, secKey);
+
+        // navigatie
+        const idx = SECTIONS.findIndex(s => s.key === secKey);
+        const prev = SECTIONS[idx - 1] || null;
+        const next = SECTIONS[idx + 1] || null;
+
+        // dots
+        $('dots').innerHTML = SECTIONS.map((s, i) => `
+            <a href="?week=${weekNum}&section=${s.key}" title="${s.label}">
+                <span class="dot${i === idx ? ' active' : ''}" style="${i === idx ? `background:${sec.color}` : ''}"></span>
+            </a>`).join('');
+
+        if (prev) {
+            const p = $('nav-prev');
+            p.href = `?week=${weekNum}&section=${prev.key}`;
+            p.textContent = `← ${prev.label}`;
+            p.classList.remove('hidden');
+        }
+        if (next) {
+            const n = $('nav-next');
+            n.href = `?week=${weekNum}&section=${next.key}`;
+            n.textContent = `${next.label} →`;
+            n.classList.remove('hidden');
+        }
+        showFlex('section-nav');
+    }
+
+    showFlex('section-header');
+    hide('loading');
+    show('section-content');
+}
+
+mount();
+</script>
+</body>
+</html>

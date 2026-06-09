@@ -1,0 +1,30 @@
+week: 8
+titel: "HTTPS & TLS"
+fase: B
+leerdoelen: [LD3, LD4]
+
+wist_je_dat:
+  tekst: "Het eerste SSL-certificaat ooit werd uitgegeven in 1995. Vandaag verlopen er elke dag miljoenen certificaten — een verkeerd geconfigureerde vervaldatum veroorzaakte in 2021 een wereldwijde storing bij services van Ericsson."
+  link: "https://www.bbc.com/news/technology-59439233"
+  bron: "BBC Technology"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 8."
+
+wat_weet_je_al:
+  - "Wat betekent het slotje in de adresbalk van je browser?"
+  - "Wat is het verschil tussen een zelfgesigneerd certificaat en een CA-certificaat?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 8."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-08"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 8."

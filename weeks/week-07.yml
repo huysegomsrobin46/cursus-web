@@ -1,0 +1,30 @@
+week: 7
+titel: "HTTP & Webserver (Apache)"
+fase: B
+leerdoelen: [LD3, LD6, LD7]
+
+wist_je_dat:
+  tekst: "Apache HTTP Server bestaat al sinds 1995 en draait vandaag nog op meer dan 30% van alle actieve websites wereldwijd. De naam verwijst naar 'a patchy server' — een verzameling patches op de oorspronkelijke NCSA httpd."
+  link: "https://httpd.apache.org/ABOUT_APACHE.html"
+  bron: "Apache Foundation"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 7."
+
+wat_weet_je_al:
+  - "Wat weet je al over hoe een webserver werkt?"
+  - "Wat is het verschil tussen HTTP en HTTPS?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 7."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-07"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 7."

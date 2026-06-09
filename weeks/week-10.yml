@@ -1,0 +1,30 @@
+week: 10
+titel: "Docker Verdieping + Integratieopdracht"
+fase: C
+leerdoelen: [LD5, LD7, LD8]
+
+wist_je_dat:
+  tekst: "Docker werd in 2013 gepresenteerd op PyCon in een 5-minuten lightning talk. De demo werkte bijna niet. Twee jaar later had het project meer dan 100 miljoen downloads."
+  link: "https://www.youtube.com/watch?v=wW9CAH9nSLs"
+  bron: "PyCon 2013 — originele Docker demo"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 10."
+
+wat_weet_je_al:
+  - "Wat heb je dit semester geleerd dat je het meest verraste?"
+  - "Welk topic wil je na dit semester verder verdiepen?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 10."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De integratieopdracht staat klaar op GitHub. Dit is de afsluiter van het semester — zet alles wat je geleerd hebt in."
+  link: "https://github.com/SASM-Foundations/labo-week-10"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 10."

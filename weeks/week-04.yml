@@ -1,0 +1,30 @@
+week: 4
+titel: "Pakketbeheer, Upgrades & Git"
+fase: A
+leerdoelen: [LD1, LD7, LD8]
+
+wist_je_dat:
+  tekst: "apt-get bestaat al sinds 1998 en is onderdeel van het Debian-project. Elke dag worden er wereldwijd honderden miljoenen pakketupdates uitgevoerd via APT."
+  link: "https://www.debian.org/doc/manuals/debian-reference/ch02.en.html"
+  bron: "Debian Reference"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 4."
+
+wat_weet_je_al:
+  - "Hoe installeer je normaal software op je eigen computer?"
+  - "Heb je ooit Git gebruikt? Voor welk project?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 4."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-04"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 4."

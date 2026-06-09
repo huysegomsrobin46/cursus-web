@@ -1,0 +1,30 @@
+week: 6
+titel: "DNS Fundamenten (BIND)"
+fase: B
+leerdoelen: [LD3, LD7]
+
+wist_je_dat:
+  tekst: "Het originele DNS-systeem uit 1983 moest het HOSTS.TXT-bestand vervangen dat op alle computers manueel bijgehouden werd. Dat bestand groeide zo snel dat het netwerk ermee instortte."
+  link: "https://www.rfc-editor.org/rfc/rfc882"
+  bron: "RFC 882"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 6."
+
+wat_weet_je_al:
+  - "Wat gebeurt er precies als je een domeinnaam intypt in je browser?"
+  - "Wat is het verschil tussen een A-record en een CNAME-record?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 6."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-06"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 6."

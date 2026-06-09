@@ -1,0 +1,30 @@
+week: 3
+titel: "Sudo, Gebruikers & Locale"
+fase: A
+leerdoelen: [LD2, LD4]
+
+wist_je_dat:
+  tekst: "De naam 'sudo' staat voor 'superuser do'. Het commando bestaat al sinds 1980 en werd oorspronkelijk ontwikkeld aan de Universiteit van New York."
+  link: "https://www.sudo.ws/about/history/"
+  bron: "sudo.ws"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 3."
+
+wat_weet_je_al:
+  - "Wat is het verschil tussen een gewone gebruiker en een administrator op je eigen computer?"
+  - "Waarom zou je op een server niet standaard als root inloggen?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 3."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-03"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 3."

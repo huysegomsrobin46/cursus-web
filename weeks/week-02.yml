@@ -1,0 +1,30 @@
+week: 2
+titel: "SSH & Remote Beheer"
+fase: A
+leerdoelen: [LD3, LD4]
+
+wist_je_dat:
+  tekst: "SSH werd in 1995 ontworpen door Tatu Ylönen nadat een wachtwoordsniffer op zijn universiteitsnetwerk werd ontdekt. De eerste versie schreef hij in een weekend."
+  link: "https://www.ssh.com/academy/ssh/history"
+  bron: "SSH Academy"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 2."
+
+wat_weet_je_al:
+  - "Heb je ooit op afstand ingelogd op een andere computer? Hoe?"
+  - "Wat weet je al over het verschil tussen een wachtwoord en een sleutelpaar?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 2."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-02"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 2."

@@ -1,0 +1,50 @@
+week: 1
+titel: "Server Fundamenten & Docker"
+fase: A
+leerdoelen: [LD1, LD5, LD8]
+
+wist_je_dat:
+  tekst: >
+    De eerste webserver ter wereld draaide op een NeXT-computer op het bureau van Tim Berners-Lee bij CERN.
+    Er hing een handgeschreven briefje op: "This machine is a server. DO NOT POWER IT DOWN!" —
+    en zo begon het internet zoals wij het kennen.
+  link: "https://home.cern/science/computing/birth-web"
+  bron: "CERN — The birth of the web"
+
+doelstellingen:
+  - "Je verklaart het verschil tussen een server en een gewone computer, en waarom de afwezigheid van een GUI in een serveromgeving een voordeel is."
+  - "Je navigeert zelfstandig door de Linux-bestandssysteemlayout (FHS) en weet wat er in /etc, /var, /home en /proc staat."
+  - "Je verklaart het verschil tussen een virtuele machine en een container, en legt uit waarom Docker dit semester ons werkplatform is."
+  - "Je start een Debian-container op via docker compose up en voert basiscommando's uit vanuit docker exec."
+
+wat_weet_je_al:
+  - "Heb je ooit een Linux-commando gebruikt? Welk commando gebruik je het vaakst?"
+  - "Wat denk jij dat het verschil is tussen een virtuele machine en een container?"
+  - "Stel je voor dat je een eigen website wil hosten. Welke stukken software heb je daarvoor nodig?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 1."
+  items: []
+  # Voorbeeld voor wanneer materiaal beschikbaar is:
+  # items:
+  #   - type: slides
+  #     label: "Slides — Server Fundamenten & Docker"
+  #     url: "https://..."
+  #   - type: video
+  #     label: "Opname contactles week 1"
+  #     url: "https://..."
+
+tips_en_tricks:
+  - "Tab-completion in de terminal spaart enorm veel tikwerk. Typ de eerste letters van een commando of pad en druk op Tab — de shell vult aan."
+  - "Ctrl+C stopt een lopend commando. Ctrl+D sluit een terminal-sessie (equivalent van 'exit')."
+  - "Bij twijfel: man <commando> of <commando> --help geeft uitleg rechtstreeks in de terminal, zonder Google."
+  - "docker compose down verwijdert de containers maar bewaart volumes. Voeg -v toe om ook volumes te wissen en met een propere lei te beginnen."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub. Volg de stappen in opdracht.md en gebruik check.sh om je eigen werk te verifiëren."
+  link: "https://github.com/SASM-Foundations/labo-week-01"
+
+test_jezelf:
+  - "Wat is het verschil tussen /etc en /var? Waarom staan configuratiebestanden in /etc en logs in /var/log?"
+  - "Leg in eigen woorden uit wat systemd doet. Wat is een 'service' in die context, en hoe controleer je de status ervan?"
+  - "Je hebt zojuist een Docker-container gestart en bestanden aangemaakt. Wat gebeurt er met die bestanden als je docker compose down -v uitvoert? Hoe zou je ze bewaren?"

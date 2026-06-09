@@ -1,0 +1,30 @@
+week: 9
+titel: "Firewall & Security Hardening"
+fase: C
+leerdoelen: [LD4, LD7]
+
+wist_je_dat:
+  tekst: "De term 'firewall' komt uit de bouw: een brandmuur die verhindert dat een brand zich verspreidt. In netwerken werd het woord voor het eerst gebruikt in 1988, na de beruchte Morris Worm die 10% van het vroege internet platlegde."
+  link: "https://en.wikipedia.org/wiki/Morris_worm"
+  bron: "Wikipedia — Morris Worm"
+
+doelstellingen:
+  - "Inhoud volgt na de contactles van week 9."
+
+wat_weet_je_al:
+  - "Wat doet een firewall precies? Wat blokkeert het en op basis waarvan?"
+  - "Wat is 'default deny' en waarom zou je dat als uitgangspositie kiezen?"
+
+leerinhoud:
+  beschrijving: "Slides en opname worden hier toegevoegd na de contactles van week 9."
+  items: []
+
+tips_en_tricks:
+  - "Inhoud volgt na de contactles."
+
+en_nu:
+  tekst: "De hands-on opdracht staat klaar op GitHub."
+  link: "https://github.com/SASM-Foundations/labo-week-09"
+
+test_jezelf:
+  - "Inhoud volgt na de contactles van week 9."
