@@ -775,10 +775,11 @@ function renderSection(data, key) {
 }
 
 function renderOverview(data) {
+    const embedSuffix = embedMode ? '&embed=1' : '';
     return `
         <p class="overview-intro">Klik op een onderdeel om naar de inhoud te gaan.</p>
         <div class="overview-grid">${SECTIONS.map(s => `
-        <a class="overview-item" href="?week=${weekNum}&section=${s.key}">
+        <a class="overview-item" href="?week=${weekNum}&section=${s.key}${embedSuffix}">
             <span class="overview-icon">${s.icon}</span>
             <span class="overview-label">${s.label}</span>
             <span class="overview-arrow">→</span>
