@@ -543,6 +543,15 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* ── EMBED MODE (Toledo iframe: geen chrome) ─────────────── */
+        body.embed-mode .site-header,
+        body.embed-mode #week-bar,
+        body.embed-mode #section-nav,
+        body.embed-mode .site-footer { display: none !important; }
+
+        body.embed-mode .page-main { padding: 20px 20px 32px; }
+        body.embed-mode { background: var(--white); }
     </style>
 </head>
 <body>
@@ -638,6 +647,8 @@ const SECTIONS = [
 const params  = new URLSearchParams(location.search);
 const weekNum = (params.get('week') || '01').padStart(2, '0');
 const secKey  = params.get('section') || null;
+const embedMode = params.get('embed') === '1';
+if (embedMode) document.body.classList.add('embed-mode');
 
 // ── DOM HELPERS ────────────────────────────────────────────────
 const $       = id => document.getElementById(id);
