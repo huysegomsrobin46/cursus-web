@@ -3,154 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SASM Foundations</title>
+    <title>SASM Foundations — UCLL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
 
     <style>
         :root {
-            --blue:        #003DA5;
-            --blue-dark:   #002D7A;
-            --blue-mid:    #1A52B8;
-            --blue-tint:   #EBF0FA;
-            --orange:      #E8530A;
-            --text:        #0F172A;
+            --navy:        #162B6E;
+            --navy-dark:   #0D1E52;
+            --navy-mid:    #1E3A8A;
+            --navy-tint:   #EDF0FA;
+            --pink:        #C4005C;
+            --pink-light:  #FAE8F2;
+            --pink-hover:  #A5004E;
+            --text:        #162B6E;
+            --text-body:   #2D3748;
             --muted:       #64748B;
             --light:       #94A3B8;
-            --bg:          #F3F6FB;
+            --bg:          #F7F8FC;
             --white:       #FFFFFF;
             --border:      #DDE3EE;
-            --r:           12px;
-            --r-sm:        8px;
-            --shadow:      0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,61,165,0.07);
-            --shadow-lg:   0 8px 32px rgba(0,61,165,0.13);
-
-            /* per-sectie kleuraccenten */
-            --c-wist:      #6D28D9;
-            --c-doel:      #003DA5;
-            --c-wat:       #047857;
-            --c-leer:      #B45309;
-            --c-tips:      #0E7490;
-            --c-ennu:      #E8530A;
-            --c-test:      #B91C1C;
+            --r:           8px;
+            --r-sm:        6px;
+            --shadow:      0 1px 4px rgba(22,43,110,0.08), 0 4px 16px rgba(22,43,110,0.06);
+            --shadow-lg:   0 8px 32px rgba(22,43,110,0.14);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'Source Sans 3', system-ui, sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--text-body);
             min-height: 100vh;
             font-size: 16px;
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
         /* ── HEADER ─────────────────────────────────────────── */
 
         .site-header {
-            background: var(--blue);
+            background: var(--navy);
             position: sticky;
             top: 0;
             z-index: 200;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
         }
         .header-inner {
-            max-width: 860px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 0 24px;
-            height: 60px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 16px;
         }
         .brand {
             display: flex;
             align-items: center;
-            gap: 11px;
-            flex-shrink: 0;
+            gap: 14px;
             text-decoration: none;
+            flex-shrink: 0;
         }
-        .brand-logo {
-            font-family: 'DM Serif Display', serif;
-            font-size: 20px;
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* UCLL sunburst approximation */
+        .brand-sunburst {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+        .brand-text-wrap {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .brand-ucll {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
             color: #fff;
-            letter-spacing: -0.3px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .brand-hogeschool {
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
         .brand-sep {
             width: 1px;
-            height: 18px;
-            background: rgba(255,255,255,0.28);
+            height: 22px;
+            background: rgba(255,255,255,0.25);
         }
-        .brand-name {
-            font-size: 13px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.82);
-            letter-spacing: 0.01em;
+        .brand-course {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.88);
         }
         #breadcrumb {
             font-size: 12.5px;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.5);
             display: flex;
             align-items: center;
             gap: 6px;
         }
         #breadcrumb a {
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
             transition: color 0.15s;
         }
         #breadcrumb a:hover { color: rgba(255,255,255,0.9); }
-        #breadcrumb .sep { opacity: 0.4; }
-        #breadcrumb .current { color: rgba(255,255,255,0.92); font-weight: 500; }
+        #breadcrumb .sep { opacity: 0.35; font-size: 14px; }
+        #breadcrumb .current { color: rgba(255,255,255,0.92); font-weight: 600; }
 
         /* ── WEEKBALK ────────────────────────────────────────── */
 
-        #week-bar {
-            background: var(--blue-dark);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            display: none;
-        }
+        #week-bar { background: var(--navy-dark); display: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
         .week-bar-inner {
-            max-width: 860px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 0 24px;
-            height: 38px;
+            height: 40px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .week-pill {
-            background: rgba(255,255,255,0.14);
+            background: var(--pink);
             color: #fff;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.07em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             padding: 3px 10px;
             border-radius: 20px;
         }
-        #week-title-bar {
-            font-size: 13px;
-            color: rgba(255,255,255,0.68);
-        }
+        #week-title-bar { font-size: 13px; color: rgba(255,255,255,0.65); }
         #fase-badge {
             margin-left: auto;
             font-size: 11px;
-            color: rgba(255,255,255,0.4);
-            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.38);
+            letter-spacing: 0.09em;
             text-transform: uppercase;
         }
 
         /* ── MAIN ────────────────────────────────────────────── */
 
         .page-main {
-            max-width: 860px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 40px 24px 88px;
+            padding: 36px 24px 88px;
         }
 
         /* ── SECTIE HEADER ───────────────────────────────────── */
@@ -158,41 +169,40 @@
         #section-header {
             display: none;
             align-items: flex-start;
-            gap: 20px;
+            gap: 18px;
             margin-bottom: 28px;
-            animation: riseIn 0.38s cubic-bezier(.22,1,.36,1) both;
+            animation: riseIn 0.35s cubic-bezier(.22,1,.36,1) both;
         }
         .icon-wrap {
-            width: 54px;
-            height: 54px;
-            border-radius: 14px;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             flex-shrink: 0;
         }
-        .section-meta { flex: 1; padding-top: 3px; }
+        .section-meta { flex: 1; padding-top: 2px; }
         #section-week-label {
-            font-size: 11.5px;
-            font-weight: 600;
-            letter-spacing: 0.09em;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             margin-bottom: 4px;
         }
         #section-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: 31px;
-            line-height: 1.18;
-            font-weight: 400;
-            color: var(--text);
+            font-family: 'Source Serif 4', serif;
+            font-size: 30px;
+            line-height: 1.2;
+            font-weight: 600;
+            color: var(--navy);
         }
 
         /* ── CONTENT AREA ────────────────────────────────────── */
 
         #section-content {
-            display: none;
-            animation: riseIn 0.42s 0.04s cubic-bezier(.22,1,.36,1) both;
+            animation: riseIn 0.4s 0.04s cubic-bezier(.22,1,.36,1) both;
         }
 
         /* ── KAART BASIS ─────────────────────────────────────── */
@@ -203,42 +213,41 @@
             box-shadow: var(--shadow);
             overflow: hidden;
         }
-        .card-body { padding: 30px 32px; }
-        .card-accent { border-left: 4px solid var(--blue); }
+        .card-body { padding: 28px 32px; }
 
         /* ── WIST JE DAT ─────────────────────────────────────── */
 
-        .wist-card { border-left: 4px solid var(--c-wist); }
+        .wist-card { border-left: 4px solid var(--pink); }
         .quote-mark {
-            font-family: 'DM Serif Display', serif;
-            font-size: 90px;
+            font-family: 'Source Serif 4', serif;
+            font-size: 80px;
             line-height: 0.55;
-            color: var(--c-wist);
-            opacity: 0.18;
+            color: var(--pink);
+            opacity: 0.15;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             user-select: none;
         }
         .wist-text {
-            font-size: 18.5px;
+            font-size: 18px;
             font-weight: 300;
             font-style: italic;
             line-height: 1.7;
-            color: var(--text);
+            color: var(--text-body);
         }
         .wist-link {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 22px;
-            color: var(--c-wist);
-            font-size: 13px;
+            margin-top: 20px;
+            color: var(--pink);
+            font-size: 13.5px;
             font-weight: 600;
             text-decoration: none;
-            transition: opacity 0.18s;
+            transition: color 0.15s;
         }
-        .wist-link:hover { opacity: 0.65; }
-        .wist-link::before { content: '→'; }
+        .wist-link:hover { color: var(--pink-hover); }
+        .wist-link::after { content: ' →'; }
 
         /* ── DOELSTELLINGEN ──────────────────────────────────── */
 
@@ -247,33 +256,34 @@
             display: flex;
             align-items: flex-start;
             gap: 14px;
-            background: var(--blue-tint);
+            background: var(--navy-tint);
             border-radius: var(--r-sm);
-            padding: 15px 18px;
+            padding: 14px 18px;
         }
         .doel-num {
-            width: 27px; height: 27px;
-            background: var(--blue);
+            width: 26px; height: 26px;
+            background: var(--navy);
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
             flex-shrink: 0;
+            margin-top: 1px;
         }
-        .doel-text { font-size: 14.5px; line-height: 1.55; padding-top: 3px; }
+        .doel-text { font-size: 14.5px; line-height: 1.55; }
         .ld-tags {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-            margin-top: 22px;
-            padding-top: 18px;
+            margin-top: 20px;
+            padding-top: 16px;
             border-top: 1px solid var(--border);
         }
         .ld-tag {
-            background: var(--blue);
+            background: var(--navy);
             color: #fff;
             font-size: 10.5px;
             font-weight: 700;
@@ -288,22 +298,18 @@
         .vragen-list { display: flex; flex-direction: column; gap: 10px; }
         .vraag-item {
             display: flex;
-            gap: 13px;
+            gap: 12px;
             align-items: flex-start;
-            padding: 16px 18px;
+            padding: 15px 18px;
             border: 1.5px solid var(--border);
             border-radius: var(--r-sm);
-            transition: border-color 0.18s, box-shadow 0.18s;
-            cursor: default;
+            transition: border-color 0.18s, background 0.18s;
         }
-        .vraag-item:hover {
-            border-color: var(--c-wat);
-            box-shadow: 0 0 0 3px rgba(4,120,87,0.07);
-        }
-        .vraag-icon { font-size: 19px; flex-shrink: 0; margin-top: 1px; }
+        .vraag-item:hover { border-color: var(--pink); background: var(--pink-light); }
+        .vraag-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
         .vraag-text { font-size: 14.5px; line-height: 1.55; }
         .vragen-note {
-            margin-top: 18px;
+            margin-top: 16px;
             font-size: 12.5px;
             color: var(--muted);
             font-style: italic;
@@ -315,10 +321,11 @@
             text-align: center;
             padding: 52px 32px;
         }
-        .leer-icon { font-size: 50px; display: block; margin-bottom: 14px; opacity: 0.55; }
+        .leer-icon { font-size: 48px; display: block; margin-bottom: 14px; opacity: 0.5; }
         .leer-title {
-            font-family: 'DM Serif Display', serif;
+            font-family: 'Source Serif 4', serif;
             font-size: 22px;
+            color: var(--navy);
             margin-bottom: 8px;
         }
         .leer-desc { font-size: 14.5px; color: var(--muted); max-width: 380px; margin: 0 auto; }
@@ -332,13 +339,13 @@
             border: 1.5px solid var(--border);
             border-radius: var(--r-sm);
             text-decoration: none;
-            color: var(--text);
+            color: var(--text-body);
             transition: border-color 0.18s, background 0.18s;
         }
-        .leer-item:hover { border-color: var(--c-leer); background: #FFFBF5; }
+        .leer-item:hover { border-color: var(--pink); background: var(--pink-light); }
         .leer-item-icon { font-size: 22px; }
-        .leer-item-label { font-size: 14.5px; font-weight: 500; }
-        .leer-item-arrow { margin-left: auto; color: var(--light); font-size: 18px; }
+        .leer-item-label { font-size: 14.5px; font-weight: 600; }
+        .leer-item-arrow { margin-left: auto; color: var(--pink); font-size: 18px; font-weight: 700; }
 
         /* ── TIPS EN TRICKS ──────────────────────────────────── */
 
@@ -348,11 +355,11 @@
             gap: 12px;
             align-items: flex-start;
             padding: 13px 16px;
-            background: #F0FAFA;
-            border-left: 3px solid var(--c-tips);
+            background: var(--navy-tint);
+            border-left: 3px solid var(--navy);
             border-radius: 0 var(--r-sm) var(--r-sm) 0;
         }
-        .tip-bullet { color: var(--c-tips); font-weight: 800; font-size: 17px; flex-shrink: 0; line-height: 1.4; }
+        .tip-bullet { color: var(--navy); font-weight: 800; font-size: 16px; flex-shrink: 0; line-height: 1.5; }
         .tip-text { font-size: 14.5px; line-height: 1.52; }
 
         /* ── EN NU IS HET AAN JOU ────────────────────────────── */
@@ -362,27 +369,28 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 52px 32px;
+            padding: 48px 32px;
         }
-        .ennu-emoji { font-size: 52px; margin-bottom: 14px; }
+        .ennu-emoji { font-size: 48px; margin-bottom: 14px; }
         .ennu-tekst { font-size: 17px; color: var(--muted); margin-bottom: 28px; max-width: 400px; line-height: 1.6; }
         .ennu-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: var(--orange);
+            background: var(--pink);
             color: #fff;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 15.5px;
+            font-weight: 700;
+            font-size: 15px;
             padding: 13px 28px;
             border-radius: 40px;
-            box-shadow: 0 4px 14px rgba(232,83,10,0.32);
-            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 14px rgba(196,0,92,0.3);
+            transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
         }
         .ennu-btn:hover {
+            background: var(--pink-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(232,83,10,0.38);
+            box-shadow: 0 8px 22px rgba(196,0,92,0.36);
         }
 
         /* ── TEST JEZELF ─────────────────────────────────────── */
@@ -394,25 +402,25 @@
             overflow: hidden;
         }
         .test-vraag {
-            padding: 18px 20px;
+            padding: 17px 20px;
             display: flex;
             gap: 14px;
             align-items: flex-start;
         }
         .test-num {
-            width: 30px; height: 30px;
-            background: var(--c-test);
+            width: 28px; height: 28px;
+            background: var(--pink);
             color: #fff;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 13px; font-weight: 700;
-            flex-shrink: 0;
+            flex-shrink: 0; margin-top: 1px;
         }
-        .test-text { font-size: 14.5px; line-height: 1.55; font-weight: 500; padding-top: 4px; }
+        .test-text { font-size: 14.5px; line-height: 1.55; font-weight: 600; padding-top: 3px; color: var(--navy); }
         .test-hint {
-            padding: 11px 20px;
-            background: #FFF5F5;
-            border-top: 1px dashed #FECACA;
+            padding: 10px 20px;
+            background: var(--pink-light);
+            border-top: 1px dashed #F0B8D4;
             font-size: 12.5px;
             color: var(--muted);
             font-style: italic;
@@ -420,55 +428,72 @@
 
         /* ── OVERVIEW MODE ───────────────────────────────────── */
 
-        .overview-grid { display: flex; flex-direction: column; gap: 10px; }
+        .overview-intro {
+            font-size: 14.5px;
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .overview-grid { display: flex; flex-direction: column; gap: 8px; }
         .overview-item {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 18px 22px;
+            padding: 16px 20px;
             background: var(--white);
             border-radius: var(--r);
             box-shadow: var(--shadow);
             text-decoration: none;
-            color: var(--text);
+            color: var(--text-body);
             border-left: 4px solid transparent;
-            transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+            transition: border-color 0.18s, box-shadow 0.18s, transform 0.12s;
         }
         .overview-item:hover {
+            border-left-color: var(--pink);
             box-shadow: var(--shadow-lg);
-            transform: translateX(3px);
+            transform: translateX(4px);
         }
-        .overview-icon { font-size: 26px; }
-        .overview-label { font-size: 15px; font-weight: 500; }
-        .overview-arrow { margin-left: auto; color: var(--light); font-size: 18px; }
+        .overview-icon { font-size: 24px; width: 32px; text-align: center; }
+        .overview-label { font-size: 15px; font-weight: 600; color: var(--navy); }
+        .overview-arrow {
+            margin-left: auto;
+            color: var(--pink);
+            font-size: 20px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        .overview-item:hover .overview-arrow { opacity: 1; transform: translateX(0); }
 
         /* ── SECTIE-NAVIGATIE ────────────────────────────────── */
 
         #section-nav {
             display: none;
-            margin-top: 44px;
+            margin-top: 40px;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            animation: riseIn 0.46s 0.08s cubic-bezier(.22,1,.36,1) both;
+            animation: riseIn 0.44s 0.08s cubic-bezier(.22,1,.36,1) both;
         }
         .nav-link {
             display: flex;
             align-items: center;
             gap: 7px;
-            color: var(--blue);
+            color: var(--navy);
             text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             padding: 9px 16px;
             border-radius: var(--r-sm);
-            border: 1.5px solid var(--blue-tint);
+            border: 1.5px solid var(--navy-tint);
+            background: var(--white);
             transition: background 0.15s, border-color 0.15s;
         }
-        .nav-link:hover { background: var(--blue-tint); border-color: var(--blue); }
+        .nav-link:hover { background: var(--navy-tint); border-color: var(--navy); }
         .nav-link.hidden { visibility: hidden; pointer-events: none; }
 
-        .section-dots { display: flex; gap: 7px; align-items: center; }
+        .section-dots { display: flex; gap: 6px; align-items: center; }
         .dot {
             width: 7px; height: 7px;
             border-radius: 50%;
@@ -476,7 +501,7 @@
             transition: background 0.2s, transform 0.2s;
             display: block;
         }
-        .dot.active { transform: scale(1.45); }
+        .dot.active { transform: scale(1.5); }
 
         /* ── LOADING / ERROR ─────────────────────────────────── */
 
@@ -486,23 +511,23 @@
             color: var(--muted);
         }
         .spinner {
-            width: 38px; height: 38px;
-            border: 3px solid var(--blue-tint);
-            border-top-color: var(--blue);
+            width: 36px; height: 36px;
+            border: 3px solid var(--navy-tint);
+            border-top-color: var(--navy);
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
             margin: 0 auto 16px;
         }
         .error-state { text-align: center; padding: 80px 24px; }
         .error-icon { font-size: 48px; margin-bottom: 14px; }
-        .error-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 8px; }
+        .error-title { font-family: 'Source Serif 4', serif; font-size: 24px; color: var(--navy); margin-bottom: 8px; }
         .error-desc { color: var(--muted); font-size: 14.5px; }
 
         /* ── FOOTER ──────────────────────────────────────────── */
 
         .site-footer {
-            background: var(--blue-dark);
-            color: rgba(255,255,255,0.42);
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.38);
             text-align: center;
             padding: 18px 24px;
             font-size: 11.5px;
@@ -512,7 +537,7 @@
         /* ── ANIMATIES ───────────────────────────────────────── */
 
         @keyframes riseIn {
-            from { opacity: 0; transform: translateY(14px); }
+            from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin {
@@ -526,9 +551,32 @@
 <header class="site-header">
     <div class="header-inner">
         <a class="brand" href="?week=01">
-            <span class="brand-logo">UCLL</span>
+            <div class="brand-logo-wrap">
+                <!-- UCLL sunburst SVG (vereenvoudigd) -->
+                <svg class="brand-sunburst" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="20" cy="20" r="5" fill="white" opacity="0.9"/>
+                    <g stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.85">
+                        <line x1="20" y1="4"  x2="20" y2="11"/>
+                        <line x1="20" y1="29" x2="20" y2="36"/>
+                        <line x1="4"  y1="20" x2="11" y2="20"/>
+                        <line x1="29" y1="20" x2="36" y2="20"/>
+                        <line x1="8.7"  y1="8.7"  x2="13.7" y2="13.7"/>
+                        <line x1="26.3" y1="26.3" x2="31.3" y2="31.3"/>
+                        <line x1="31.3" y1="8.7"  x2="26.3" y2="13.7"/>
+                        <line x1="8.7"  y1="31.3" x2="13.7" y2="26.3"/>
+                        <line x1="5.4"  y1="13.5" x2="11.8" y2="15.7" opacity="0.6"/>
+                        <line x1="28.2" y1="24.3" x2="34.6" y2="26.5" opacity="0.6"/>
+                        <line x1="13.5" y1="5.4"  x2="15.7" y2="11.8" opacity="0.6"/>
+                        <line x1="24.3" y1="28.2" x2="26.5" y2="34.6" opacity="0.6"/>
+                    </g>
+                </svg>
+                <div class="brand-text-wrap">
+                    <span class="brand-ucll">UCLL</span>
+                    <span class="brand-hogeschool">Hogeschool</span>
+                </div>
+            </div>
             <span class="brand-sep"></span>
-            <span class="brand-name">SASM Foundations</span>
+            <span class="brand-course">SASM Foundations</span>
         </a>
         <nav id="breadcrumb"></nav>
     </div>
@@ -551,19 +599,17 @@
         <p>Inhoud laden…</p>
     </div>
 
-    <div id="section-header">
-        <div class="icon-wrap" id="icon-wrap">
-            <span id="section-icon"></span>
-        </div>
+    <div id="section-header" style="display:none">
+        <div class="icon-wrap" id="icon-wrap"></div>
         <div class="section-meta">
             <div id="section-week-label"></div>
             <h1 id="section-title"></h1>
         </div>
     </div>
 
-    <div id="section-content"></div>
+    <div id="section-content" style="display:none"></div>
 
-    <nav id="section-nav">
+    <nav id="section-nav" style="display:none">
         <a class="nav-link hidden" id="nav-prev">← Vorige</a>
         <div class="section-dots" id="dots"></div>
         <a class="nav-link hidden" id="nav-next">Volgende →</a>
@@ -579,13 +625,13 @@
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────
 const SECTIONS = [
-    { key: 'wist-je-dat',    label: 'Wist je dat…',              icon: '💡', color: '#6D28D9' },
-    { key: 'doelstellingen', label: 'Doelstellingen',             icon: '🎯', color: '#003DA5' },
-    { key: 'wat-weet-je-al', label: 'Wat weet je hier al over?', icon: '🤔', color: '#047857' },
-    { key: 'leerinhoud',     label: 'Leerinhoud',                 icon: '📚', color: '#B45309' },
-    { key: 'tips-en-tricks', label: 'Tips en tricks',             icon: '😎', color: '#0E7490' },
-    { key: 'en-nu',          label: 'En nu is het aan jou!',      icon: '🚀', color: '#E8530A' },
-    { key: 'test-jezelf',    label: 'Test jezelf',                icon: '📝', color: '#B91C1C' },
+    { key: 'wist-je-dat',    label: 'Wist je dat…',              icon: '💡', color: '#C4005C' },
+    { key: 'doelstellingen', label: 'Doelstellingen',             icon: '🎯', color: '#162B6E' },
+    { key: 'wat-weet-je-al', label: 'Wat weet je hier al over?', icon: '🤔', color: '#162B6E' },
+    { key: 'leerinhoud',     label: 'Leerinhoud',                 icon: '📚', color: '#162B6E' },
+    { key: 'tips-en-tricks', label: 'Tips en tricks',             icon: '😎', color: '#162B6E' },
+    { key: 'en-nu',          label: 'En nu is het aan jou!',      icon: '🚀', color: '#C4005C' },
+    { key: 'test-jezelf',    label: 'Test jezelf',                icon: '📝', color: '#C4005C' },
 ];
 
 // ── URL PARAMS ─────────────────────────────────────────────────
@@ -594,10 +640,19 @@ const weekNum = (params.get('week') || '01').padStart(2, '0');
 const secKey  = params.get('section') || null;
 
 // ── DOM HELPERS ────────────────────────────────────────────────
-const $ = id => document.getElementById(id);
-const show = id => { $(id).style.display = ''; };
-const hide = id => { $(id).style.display = 'none'; };
+const $       = id => document.getElementById(id);
+const show    = id => { $(id).style.display = 'block'; };   // FIX: explicit block
+const hide    = id => { $(id).style.display = 'none'; };
 const showFlex = id => { $(id).style.display = 'flex'; };
+
+// ── XSS ESCAPING ───────────────────────────────────────────────
+function esc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
 
 // ── RENDERERS ──────────────────────────────────────────────────
 
@@ -617,7 +672,7 @@ function renderDoelstellingen(d) {
             <span class="doel-text">${esc(t)}</span>
         </li>`).join('');
     const tags = (d.leerdoelen || []).map(l => `<span class="ld-tag">${esc(l)}</span>`).join('');
-    return `<div class="card" style="border-left:4px solid var(--c-doel)"><div class="card-body">
+    return `<div class="card" style="border-left:4px solid var(--navy)"><div class="card-body">
         <ul class="doel-list">${items}</ul>
         ${tags ? `<div class="ld-tags">${tags}</div>` : ''}
     </div></div>`;
@@ -629,7 +684,7 @@ function renderWatWeetJeAl(d) {
             <span class="vraag-icon">🤔</span>
             <p class="vraag-text">${esc(v)}</p>
         </div>`).join('');
-    return `<div class="card" style="border-left:4px solid var(--c-wat)"><div class="card-body">
+    return `<div class="card" style="border-left:4px solid var(--navy)"><div class="card-body">
         <div class="vragen-list">${items}</div>
         <p class="vragen-note">Dit zijn geen inlevervragen — neem even de tijd om hierover na te denken.</p>
     </div></div>`;
@@ -639,7 +694,7 @@ function renderLeerinhoud(d) {
     const l = d.leerinhoud || {};
     const items = l.items || [];
     if (!items.length) {
-        return `<div class="card" style="border-left:4px solid var(--c-leer)">
+        return `<div class="card" style="border-left:4px solid var(--navy)">
             <div class="leer-placeholder">
                 <span class="leer-icon">📂</span>
                 <h2 class="leer-title">Leerinhoud volgt</h2>
@@ -651,9 +706,9 @@ function renderLeerinhoud(d) {
         <a class="leer-item" href="${esc(item.url || '#')}" target="_blank" rel="noopener">
             <span class="leer-item-icon">${typeIcon[item.type] || '📄'}</span>
             <span class="leer-item-label">${esc(item.label || item.type)}</span>
-            <span class="leer-item-arrow">›</span>
+            <span class="leer-item-arrow">→</span>
         </a>`).join('');
-    return `<div class="card" style="border-left:4px solid var(--c-leer)"><div class="card-body">
+    return `<div class="card" style="border-left:4px solid var(--navy)"><div class="card-body">
         <div class="leer-items">${rendered}</div>
     </div></div>`;
 }
@@ -664,14 +719,14 @@ function renderTips(d) {
             <span class="tip-bullet">›</span>
             <p class="tip-text">${esc(t)}</p>
         </div>`).join('');
-    return `<div class="card" style="border-left:4px solid var(--c-tips)"><div class="card-body">
+    return `<div class="card" style="border-left:4px solid var(--navy)"><div class="card-body">
         <div class="tips-list">${items}</div>
     </div></div>`;
 }
 
 function renderEnNu(d) {
     const e = d.en_nu || {};
-    return `<div class="card" style="border-left:4px solid var(--c-ennu)">
+    return `<div class="card" style="border-left:4px solid var(--pink)">
         <div class="ennu-inner">
             <span class="ennu-emoji">🚀</span>
             <p class="ennu-tekst">${esc(e.tekst || 'De hands-on opdracht staat klaar op GitHub.')}</p>
@@ -690,7 +745,7 @@ function renderTestJezelf(d) {
             </div>
             <div class="test-hint">Beantwoord in eigen woorden — geen opzoeken.</div>
         </div>`).join('');
-    return `<div class="card" style="border-left:4px solid var(--c-test)"><div class="card-body">
+    return `<div class="card" style="border-left:4px solid var(--pink)"><div class="card-body">
         <div class="test-list">${items}</div>
     </div></div>`;
 }
@@ -709,21 +764,14 @@ function renderSection(data, key) {
 }
 
 function renderOverview(data) {
-    return `<div class="overview-grid">${SECTIONS.map(s => `
-        <a class="overview-item" href="?week=${weekNum}&section=${s.key}" style="border-color:${s.color}">
+    return `
+        <p class="overview-intro">Klik op een onderdeel om naar de inhoud te gaan.</p>
+        <div class="overview-grid">${SECTIONS.map(s => `
+        <a class="overview-item" href="?week=${weekNum}&section=${s.key}">
             <span class="overview-icon">${s.icon}</span>
             <span class="overview-label">${s.label}</span>
-            <span class="overview-arrow">›</span>
+            <span class="overview-arrow">→</span>
         </a>`).join('')}</div>`;
-}
-
-// ── XSS ESCAPING ───────────────────────────────────────────────
-function esc(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
 }
 
 // ── MOUNT ──────────────────────────────────────────────────────
@@ -754,9 +802,9 @@ async function mount() {
     if (!secKey) {
         // OVERVIEW
         $('breadcrumb').innerHTML = `<span class="current">Week ${weekNum}</span>`;
-        $('icon-wrap').style.background = '#EBF0FA';
-        $('section-icon').textContent = '📋';
-        $('section-week-label').style.color = 'var(--blue)';
+        $('icon-wrap').style.background = 'var(--navy-tint)';
+        $('icon-wrap').textContent = '📋';
+        $('section-week-label').style.color = 'var(--pink)';
         $('section-week-label').textContent = 'Weekoverzicht';
         $('section-title').textContent = data.titel || `Week ${weekNum}`;
         $('section-content').innerHTML = renderOverview(data);
@@ -779,7 +827,8 @@ async function mount() {
 
         // sectie header
         $('icon-wrap').style.background = sec.color + '18';
-        $('section-icon').textContent = sec.icon;
+        $('icon-wrap').style.fontSize = '24px';
+        $('icon-wrap').textContent = sec.icon;
         $('section-week-label').style.color = sec.color;
         $('section-week-label').textContent = `Week ${weekNum} — ${data.titel || ''}`;
         $('section-title').textContent = sec.label;
@@ -787,15 +836,15 @@ async function mount() {
         // content
         $('section-content').innerHTML = renderSection(data, secKey);
 
-        // navigatie
+        // nav dots
         const idx = SECTIONS.findIndex(s => s.key === secKey);
         const prev = SECTIONS[idx - 1] || null;
         const next = SECTIONS[idx + 1] || null;
 
-        // dots
         $('dots').innerHTML = SECTIONS.map((s, i) => `
             <a href="?week=${weekNum}&section=${s.key}" title="${s.label}">
-                <span class="dot${i === idx ? ' active' : ''}" style="${i === idx ? `background:${sec.color}` : ''}"></span>
+                <span class="dot${i === idx ? ' active' : ''}"
+                      style="${i === idx ? `background:${sec.color}` : ''}"></span>
             </a>`).join('');
 
         if (prev) {
